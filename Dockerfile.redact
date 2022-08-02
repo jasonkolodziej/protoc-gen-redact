@@ -10,6 +10,7 @@ COPY go.sum ./
 RUN go mod download
 
 COPY ./redact ./redact
+COPY template.tmp ./
 COPY *.go ./
 
 
@@ -35,6 +36,7 @@ LABEL "build.buf.plugins.runtime_library_versions.2.version"="v0.5.2"
 LABEL "build.buf.plugins.runtime_library_versions.3.name"="google.golang.org/grpc"
 LABEL "build.buf.plugins.runtime_library_versions.3.version"="v1.34.0"
 #
+COPY --from=builder-local /app/template.tmp /
 COPY --from=builder-local /app/bin /
 #
 ENTRYPOINT ["/protoc-gen-redact"]

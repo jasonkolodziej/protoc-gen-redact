@@ -4,6 +4,11 @@
 NEW_REPO_PATH='yourscmprovider.com/youruser/yourrepo'
 CURRENT_REPO_PATH=$(shell go mod why | tail -n1)
 
+BUF_REPO=$(shell cd ./redact && buf mod open)
+
+buf_repos:
+	@echo ${BUF_REPO}
+
 buf_gen:
 	buf --debug --verbose generate
 
