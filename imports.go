@@ -9,18 +9,18 @@ import (
 // unique alias for imports
 func (m *Module) importPaths(file pgs.File) (path2Alias, alias2Path map[string]string) {
 	path2Alias = map[string]string{
-		"context":                                       "context",
-		"google.golang.org/grpc":                        "grpc",
-		"google.golang.org/grpc/codes":                  "codes",
-		"google.golang.org/grpc/status":                 "status",
-		"github.com/Shivam010/protoc-gen-redact/redact": "redact",
+		"context":                                            "context",
+		"google.golang.org/grpc":                             "grpc",
+		"google.golang.org/grpc/codes":                       "codes",
+		"google.golang.org/grpc/status":                      "status",
+		"github.com/jasonkolodziej/protoc-gen-redact/redact": "redact",
 	}
 	alias2Path = map[string]string{
 		"context": "context",
 		"grpc":    "google.golang.org/grpc",
 		"codes":   "google.golang.org/grpc/codes",
 		"status":  "google.golang.org/grpc/status",
-		"redact":  "github.com/Shivam010/protoc-gen-redact/redact",
+		"redact":  "github.com/jasonkolodziej/protoc-gen-redact/redact",
 	}
 
 	self := m.ctx.ImportPath(file).String()

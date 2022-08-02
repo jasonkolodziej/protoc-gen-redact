@@ -5,7 +5,7 @@ package tests;
 import "redact/redact.proto";
 import "google/protobuf/empty.proto";
 
-option go_package = "github.com/Shivam010/protoc-gen-redact/examples/tests;tests";
+option go_package = "github.com/jasonkolodziej/protoc-gen-redact/examples/tests;tests";
 
 enum TestEnum {
     ValueZero = 0;

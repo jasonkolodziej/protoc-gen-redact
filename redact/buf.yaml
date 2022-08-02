@@ -1,0 +1,8 @@
+version: v1
+name: buf.build/jasonkolodziej/protoc-gen-redact
+lint:
+  use:
+    - DEFAULT
+breaking:
+  use:
+    - FILE

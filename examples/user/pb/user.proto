@@ -5,7 +5,7 @@ package user;
 import "redact/redact.proto";
 import "google/protobuf/empty.proto";
 
-option go_package = "github.com/Shivam010/protoc-gen-redact/examples/user/pb;pb";
+option go_package = "github.com/jasonkolodziej/protoc-gen-redact/examples/user/pb;pb";
 
 message User {
     // User credentials

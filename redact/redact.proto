@@ -5,7 +5,7 @@ package redact;
 
 import "google/protobuf/descriptor.proto";
 
-option go_package = "github.com/Shivam010/protoc-gen-redact/redact;redact";
+option go_package = "github.com/jasonkolodziej/protoc-gen-redact/redact;redact";
 
 // Redaction rules applied at the file level
 extend google.protobuf.FileOptions {

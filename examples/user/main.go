@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/Shivam010/protoc-gen-redact/examples/user/pb"
-	"github.com/Shivam010/protoc-gen-redact/redact"
+	"github.com/jasonkolodziej/protoc-gen-redact/examples/user/pb"
+	"github.com/jasonkolodziej/protoc-gen-redact/redact"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
