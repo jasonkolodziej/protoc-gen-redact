@@ -26,8 +26,8 @@ FROM scratch
 #
 ## Runtime dependencies
 # LABEL "build.buf.plugins.runtime_library_versions.0.name"="github.com/twitchtv/twirp"
-LABEL "build.buf.plugins.runtime_library_versions.0.name"="github.com/jasonkolodziej/protoc-gen-redact"
-LABEL "build.buf.plugins.runtime_library_versions.0.version"="v8.1.0+incompatible"
+LABEL "build.buf.plugins.runtime_library_versions.0.name"="github.com/jasonkolodziej/protoc-gen-redact@bufbuild"
+LABEL "build.buf.plugins.runtime_library_versions.0.version"="v0.1.1"
 LABEL "build.buf.plugins.runtime_library_versions.1.name"="google.golang.org/protobuf"
 LABEL "build.buf.plugins.runtime_library_versions.1.version"="v1.27.1"
 LABEL "build.buf.plugins.runtime_library_versions.2.name"="github.com/lyft/protoc-gen-star"
@@ -35,6 +35,6 @@ LABEL "build.buf.plugins.runtime_library_versions.2.version"="v0.5.2"
 LABEL "build.buf.plugins.runtime_library_versions.3.name"="google.golang.org/grpc"
 LABEL "build.buf.plugins.runtime_library_versions.3.version"="v1.34.0"
 #
-#COPY --from=builder-local /go/bin /
+COPY --from=builder-local /app/bin /
 #
-#ENTRYPOINT ["/protoc-gen-twirp"]
+ENTRYPOINT ["/protoc-gen-redact"]
