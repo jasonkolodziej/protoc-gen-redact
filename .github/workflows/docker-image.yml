@@ -17,7 +17,7 @@ jobs:
     - name: List
       run: |
         ls -al
-        BUF_VERSION=$(shell curl -sSL https://api.github.com/repos/bufbuild/buf/releases/latest \
+        BUF_VERSION=$(curl -sSL https://api.github.com/repos/bufbuild/buf/releases/latest \
                    | grep '"name":' \
                    | head -1 \
                    | cut -d : -f 2,3 \
@@ -51,7 +51,7 @@ jobs:
     #     # binaries-location: "/usr/local/bin" # optional
     - name: buf.build login
       run: |
-        buf
+        /usr/local/buf
     - name: Build the Docker image
     # - uses: actions/checkout@v3
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
