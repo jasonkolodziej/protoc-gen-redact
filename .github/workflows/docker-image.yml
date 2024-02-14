@@ -23,7 +23,7 @@ jobs:
                    | cut -d : -f 2,3 \
                    | tr -d '[:space:]\",')
         curl -sSL "https://github.com/bufbuild/buf/releases/download/${BUF_VERSION}/buf-$(shell uname -s)-$(shell uname -m)" \
-        -o "$(shell go env GOPATH)/bin/buf" && chmod +x "$(shell go env GOPATH)/bin/buf"
+        -o "/usr/local/bin/buf" && chmod +x "/usr/local/bin/buf"
     # - uses: jaxxstorm/action-install-gh-release@v1.11.0
     #   name: buf.build Download
     #   with:
