@@ -44,23 +44,21 @@ jobs:
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       run: docker build . --platform linux/amd64 -t buf.build/jasonkolodziej/redact:v0.1.1
     #* Push module to the BSR
-    - uses: bufbuild/buf-push-action@v1
+    # - uses: bufbuild/buf-push-action@v1
+    #   with:
+    #     buf_token: ${{ secrets.BUFTOKEN }}
+    #     # https://buf.build/docs/ci-cd/github-actions#buf-push
+    #     input: --image buf.build/jasonkolodziej/redact:v0.1.1
+    #     create_visibility: private
+    #     draft: ${{ github.ref_name != 'main'}}
+    - uses: bufbuild/buf-setup-action@v1
+    - name: buf.build Push Plugin
       with:
-        buf_token: ${{ secrets.BUFTOKEN }}
-        # https://buf.build/docs/ci-cd/github-actions#buf-push
-        input: --image buf.build/jasonkolodziej/redact:v0.1.1
-        create_visibility: private
-        draft: ${{ github.ref_name != 'main'}}
+        buf_user: ${{ secrets.BUFUSER }}
+        buf_api_token: ${{ secrets.BUFTOKEN }}
+    - run: buf registry plugin push --visibility private --image buf.build/jasonkolodziej/redact:v0.1.1
     - name: buf.build logout
-      env: # Or as an environment variable
-        BUF_USER: ${{ secrets.BufUser }}
-      run: |
-        buf registry logout
-    - name: buf.build uninstall
-      run: |
-        buf
-        BIN="/usr/local/bin" && \
-        rm -f "${BIN}/buf"
+    - run: buf registry logout
     
 
           
