@@ -26,11 +26,12 @@ jobs:
         curl -sSL "https://github.com/bufbuild/buf/releases/download/${BUF_VERSION}/buf-$(uname -s)-$(uname -m)" \
         -o "/usr/local/bin/buf" && chmod +x "/usr/local/bin/buf"
     - name: buf.build login
+    - shell: bash
       env: # Or as an environment variable
         BUF_TOKEN: ${{ secrets.BUFTOKEN }}
         BUF_USER: ${{ secrets.BUFUSER }}
       run: |
-        buf registry login --verbose --username ${BUF_USER} --token-stdin ${BUF_TOKEN}
+        buf registry login --verbose --username $BUF_USER --token-stdin $BUF_TOKEN
     - name: Build the Docker image
     # - uses: actions/checkout@v3
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
