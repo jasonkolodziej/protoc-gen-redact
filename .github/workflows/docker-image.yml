@@ -16,9 +16,9 @@ jobs:
 
     steps:
     - name: List
+    - uses: actions/checkout@v3
       run: |
         ls -al
-    - uses: actions/checkout@v3
     - name: Build the Docker image
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-      run: docker build --platform linux/amd64 -t buf.build/jasonkolodziej/redact:v0.1.1 .
+      run: docker build --platform linux/amd64 -t buf.build/jasonkolodziej/redact:v0.1.1 Dockerfile.redact
