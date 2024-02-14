@@ -61,7 +61,6 @@ jobs:
         buf_user: ${{ secrets.BUFUSER }}
         buf_api_token: ${{ secrets.BUFTOKEN }}
     - run: | 
-        buf registry login
         buf registry plugin push --visibility private --image buf.build/jasonkolodziej/redact:v0.1.1
     - name: buf.build logout
       run: buf registry logout
