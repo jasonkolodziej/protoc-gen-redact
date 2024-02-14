@@ -21,6 +21,7 @@ jobs:
       with:
         buf_user: ${{ secrets.BUFUSER }}
         buf_api_token: ${{ secrets.BUFTOKEN }}
+      
     # - name: List
     #   run: |
     #     ls -al
@@ -55,7 +56,13 @@ jobs:
     #     draft: ${{ github.ref_name != 'main'}}
     
     - name: buf.build Push Plugin
-      run: buf registry plugin push --visibility private --image buf.build/jasonkolodziej/redact:v0.1.1
+      uses: bufbuild/buf-setup-action@v1
+      with:
+        buf_user: ${{ secrets.BUFUSER }}
+        buf_api_token: ${{ secrets.BUFTOKEN }}
+    - run: | 
+        buf registry login
+        buf registry plugin push --visibility private --image buf.build/jasonkolodziej/redact:v0.1.1
     - name: buf.build logout
       run: buf registry logout
     
