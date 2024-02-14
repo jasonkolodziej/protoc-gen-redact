@@ -22,4 +22,4 @@ jobs:
     - name: Build the Docker image
     # - uses: actions/checkout@v3
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-      run: docker build .redact --platform linux/amd64 -t buf.build/jasonkolodziej/redact:v0.1.1
+      run: docker build . --platform linux/amd64 -t buf.build/jasonkolodziej/redact:v0.1.1
