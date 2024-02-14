@@ -1,3 +1,4 @@
+# https://github.com/bufbuild/plugins/blob/main/CONTRIBUTING.md#bufpluginyaml-file
 version: v1
-name: buf.example.com/acme/go-json
+name: buf.build/jasonkolodziej/redact
 plugin_version: v1.1.0
