@@ -45,7 +45,9 @@ jobs:
     - name: Build Docker image
     # - uses: actions/checkout@v3
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-      run: docker build . --platform linux/amd64 -t buf.build/jasonkolodziej/redact:v0.1.1
+      run: |
+        docker build --platform linux/amd64 -t buf.build/jasonkolodziej/redact:v0.1.1 .
+        docker image ls
     #* Push module to the BSR
     # - uses: bufbuild/buf-push-action@v1
     #   with:
