@@ -51,8 +51,9 @@ jobs:
     #     input: --image buf.build/jasonkolodziej/redact:v0.1.1
     #     create_visibility: private
     #     draft: ${{ github.ref_name != 'main'}}
-    - uses: bufbuild/buf-setup-action@v1
+    
     - name: buf.build Push Plugin
+      uses: bufbuild/buf-setup-action@v1
       with:
         buf_user: ${{ secrets.BUFUSER }}
         buf_api_token: ${{ secrets.BUFTOKEN }}
