@@ -31,7 +31,9 @@ jobs:
         BUF_TOKEN: ${{ secrets.BUFTOKEN }}
         BUF_USER: ${{ secrets.BUFUSER }}
       run: |
-        buf registry login --verbose --username $BUF_USER --token-stdin $BUF_TOKEN
+        echo $BUF_USER
+        echo "$BUF_USER"
+        buf registry login --verbose --username "$BUF_USER" --token-stdin "$BUF_TOKEN"
     - name: Build the Docker image
     # - uses: actions/checkout@v3
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
