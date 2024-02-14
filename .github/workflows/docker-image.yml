@@ -48,7 +48,6 @@ jobs:
       run: | # buf.build/jasonkolodziej/redact:v0.1.1
         docker build --platform linux/amd64 -t redact:v0.1.1 .
         docker image ls
-        docker pull buf.build/jasonkolodziej/redact
     #* Push module to the BSR
     # - uses: bufbuild/buf-push-action@v1
     #   with:
