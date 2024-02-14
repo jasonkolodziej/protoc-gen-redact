@@ -48,7 +48,7 @@ jobs:
       with:
         buf_token: ${{ secrets.BUFTOKEN }}
         # https://buf.build/docs/ci-cd/github-actions#buf-push
-        input: buf.build/jasonkolodziej/redact:v0.1.1
+        input: --image buf.build/jasonkolodziej/redact:v0.1.1
         create_visibility: private
         draft: ${{ github.ref_name != 'main'}}
     - name: buf.build logout
