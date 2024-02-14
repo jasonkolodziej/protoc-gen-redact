@@ -16,11 +16,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     #* Install buf
-    - name: Install Buf.build
-      uses: bufbuild/buf-setup-action@v1
-      with:
-        buf_user: ${{ secrets.BUFUSER }}
-        buf_api_token: ${{ secrets.BUFTOKEN }}
+    # - name: Install Buf.build
+    #   uses: bufbuild/buf-setup-action@v1
+    #   with:
+    #     buf_user: ${{ secrets.BUFUSER }}
+    #     buf_api_token: ${{ secrets.BUFTOKEN }}
       
     # - name: List
     #   run: |
@@ -55,13 +55,14 @@ jobs:
     #     create_visibility: private
     #     draft: ${{ github.ref_name != 'main'}}
     
-    - name: buf.build Push Plugin
-      uses: bufbuild/buf-setup-action@v1
+    - uses: bufbuild/buf-setup-action@v1
       with:
         buf_user: ${{ secrets.BUFUSER }}
         buf_api_token: ${{ secrets.BUFTOKEN }}
+        # Ensure that `buf` is installed
+    - run: buf --version
     - run: | 
-        buf registry plugin push --visibility private --image buf.build/jasonkolodziej/redact:v0.1.1
+        buf beta registry plugin push --visibility private --image buf.build/jasonkolodziej/redact:v0.1.1
     - name: buf.build logout
       run: buf registry logout
     
