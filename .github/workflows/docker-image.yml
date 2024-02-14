@@ -14,26 +14,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: List
-      run: |
-        ls -al
-        echo $PATH
-        BUF_VERSION=$(curl -sSL https://api.github.com/repos/bufbuild/buf/releases/latest \
-                   | grep '"name":' \
-                   | head -1 \
-                   | cut -d : -f 2,3 \
-                   | tr -d '[:space:]\",')
-        curl -sSL "https://github.com/bufbuild/buf/releases/download/${BUF_VERSION}/buf-$(uname -s)-$(uname -m)" \
-        -o "/usr/local/bin/buf" && chmod +x "/usr/local/bin/buf"
-    - name: buf.build login
-      shell: bash
-      env: # Or as an environment variable
-        BUF_TOKEN: ${{ secrets.BUFTOKEN }}
-        BUF_USER: ${{ secrets.BUFUSER }}
-      run: |
-        echo $BUF_USER
-        echo "$BUF_USER"
-        buf registry login --verbose --username "$BUF_USER" --token-stdin "$BUF_TOKEN"
+    - uses: bufbuild/buf-setup-action@v1
+      with:
+        buf_user: ${{ secrets.BUFUSER }}
+        buf_api_token: ${{ secrets.BUFTOKEN }}
+    # - name: List
+    #   run: |
+    #     ls -al
+    #     echo $PATH
+    #     BUF_VERSION=$(curl -sSL https://api.github.com/repos/bufbuild/buf/releases/latest \
+    #                | grep '"name":' \
+    #                | head -1 \
+    #                | cut -d : -f 2,3 \
+    #                | tr -d '[:space:]\",')
+    #     curl -sSL "https://github.com/bufbuild/buf/releases/download/${BUF_VERSION}/buf-$(uname -s)-$(uname -m)" \
+    #     -o "/usr/local/bin/buf" && chmod +x "/usr/local/bin/buf"
+    # - name: buf.build login
+    #   shell: bash
+    #   env: # Or as an environment variable
+    #     BUF_TOKEN: ${{ secrets.BUFTOKEN }}
+    #     BUF_USER: ${{ secrets.BUFUSER }}
+    #   run: |
+    #     echo $BUF_USER
+    #     echo "$BUF_USER"
+    #     buf registry login --verbose --username "$BUF_USER" --token-stdin "$BUF_TOKEN"
     - name: Build the Docker image
     # - uses: actions/checkout@v3
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
