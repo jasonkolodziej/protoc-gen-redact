@@ -1,4 +1,4 @@
 # https://github.com/bufbuild/plugins/blob/main/CONTRIBUTING.md#bufpluginyaml-file
 version: v1
 name: buf.build/jasonkolodziej/redact
-plugin_version: v1.1.0
+plugin_version: v0.1.1
