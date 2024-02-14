@@ -21,8 +21,9 @@ jobs:
     # - uses: actions/checkout@v3
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       run: docker build . --platform linux/amd64 -t buf.build/jasonkolodziej/redact:v0.1.1
-    - name: buf.build Download
+    
     - uses: jaxxstorm/action-install-gh-release@v1.11.0
+      name: buf.build Download
       with:
         # GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)
         # token: # optional, default is ${{ github.token }}
