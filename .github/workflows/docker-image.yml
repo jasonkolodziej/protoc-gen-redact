@@ -17,31 +17,38 @@ jobs:
     - name: List
       run: |
         ls -al
-    - uses: jaxxstorm/action-install-gh-release@v1.11.0
-      name: buf.build Download
-      with:
-        # GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)
-        # token: # optional, default is ${{ github.token }}
-        # GitHub repo where binary is located
-        repo: bufbuild/buf
-        # tag containing binary to install
-        # tag: # default is latest
-        # OS Platform to match in release package. Specify this parameter if the repository releases do not follow a normal convention otherwise it will be auto-detected.
-        platform: Linux # optional
-        # OS Architecture to match in release package. Specify this parameter if the repository releases do not follow a normal convention otherwise it will be auto-detected.
-        # arch: # optional
-        # Custom file extension to match in release package.  Specify this parameter if the repository releases do not provide a .tar.gz or .zip format release.
-        # extension: # optional
-        # Enable/disable file extension matching in release package.  Specify this parameter if the repository releases do not have a file extension e.g. they are pure binaries.
-        # extension-matching: # optional, default is enable
-        # When installing a release that is not an archive, e.g. a pure binary, this controls how the downloaded release asset is renamed.  Specify this parameter if installing a non-archive release.
-        rename-to: "buf" # optional
-        # When installing a release that is not an archive, e.g. a pure binary, this controls how the downloaded release asset is chmod'd.  Specify this parameter if installing a non-archive release and you need to change its permissions e.g. make it executable.
-        chmod: "+x" # optional
-        # When set to 'enable', caches the downloads of known tags with actions/cache
-       # cache: # optional
-        # Specify this parameter if the binaries are not located in the root of the release archive. The parameter should be a relative path to the release archive. For example, if the binaries are located in the 'bin' directory of the release archive, the parameter should be 'bin'.
-        # binaries-location: "/usr/local/bin" # optional
+        BUF_VERSION=$(shell curl -sSL https://api.github.com/repos/bufbuild/buf/releases/latest \
+                   | grep '"name":' \
+                   | head -1 \
+                   | cut -d : -f 2,3 \
+                   | tr -d '[:space:]\",')
+        curl -sSL "https://github.com/bufbuild/buf/releases/download/${BUF_VERSION}/buf-$(shell uname -s)-$(shell uname -m)" 
+        -o "$(shell go env GOPATH)/bin/buf" && chmod +x "$(shell go env GOPATH)/bin/buf"
+    # - uses: jaxxstorm/action-install-gh-release@v1.11.0
+    #   name: buf.build Download
+    #   with:
+    #     # GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)
+    #     # token: # optional, default is ${{ github.token }}
+    #     # GitHub repo where binary is located
+    #     repo: bufbuild/buf
+    #     # tag containing binary to install
+    #     # tag: # default is latest
+    #     # OS Platform to match in release package. Specify this parameter if the repository releases do not follow a normal convention otherwise it will be auto-detected.
+    #     platform: Linux # optional
+    #     # OS Architecture to match in release package. Specify this parameter if the repository releases do not follow a normal convention otherwise it will be auto-detected.
+    #     # arch: # optional
+    #     # Custom file extension to match in release package.  Specify this parameter if the repository releases do not provide a .tar.gz or .zip format release.
+    #     # extension: # optional
+    #     # Enable/disable file extension matching in release package.  Specify this parameter if the repository releases do not have a file extension e.g. they are pure binaries.
+    #     # extension-matching: # optional, default is enable
+    #     # When installing a release that is not an archive, e.g. a pure binary, this controls how the downloaded release asset is renamed.  Specify this parameter if installing a non-archive release.
+    #     rename-to: "buf" # optional
+    #     # When installing a release that is not an archive, e.g. a pure binary, this controls how the downloaded release asset is chmod'd.  Specify this parameter if installing a non-archive release and you need to change its permissions e.g. make it executable.
+    #     chmod: "+x" # optional
+    #     # When set to 'enable', caches the downloads of known tags with actions/cache
+    #    # cache: # optional
+    #     # Specify this parameter if the binaries are not located in the root of the release archive. The parameter should be a relative path to the release archive. For example, if the binaries are located in the 'bin' directory of the release archive, the parameter should be 'bin'.
+    #     # binaries-location: "/usr/local/bin" # optional
     - name: buf.build login
       run: |
         buf
