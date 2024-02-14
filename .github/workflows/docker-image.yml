@@ -45,8 +45,8 @@ jobs:
     - name: Build Docker image
     # - uses: actions/checkout@v3
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-      run: |
-        docker build --platform linux/amd64 -t buf.build/jasonkolodziej/redact:v0.1.1 .
+      run: | # buf.build/jasonkolodziej/redact:v0.1.1
+        docker build --platform linux/amd64 -t redact:v0.1.1 .
         docker image ls
         docker pull buf.build/jasonkolodziej/redact
     #* Push module to the BSR
@@ -65,7 +65,7 @@ jobs:
         # Ensure that `buf` is installed
     - run: buf --version
     - run: | 
-        buf beta registry plugin push --visibility private --image buf.build/jasonkolodziej/redact:v0.1.1
+        buf beta registry plugin push --visibility private --image redact:v0.1.1
     - name: buf.build logout
       run: buf registry logout
     
