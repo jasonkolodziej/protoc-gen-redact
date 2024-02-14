@@ -31,6 +31,7 @@ jobs:
         BUF_USER: ${{ secrets.BUFUSER }}
       run: |
         buf registry login --username ${{ env.BUF_USER }}
+        cat $HOME/.netrc
     - name: Build the Docker image
     # - uses: actions/checkout@v3
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
