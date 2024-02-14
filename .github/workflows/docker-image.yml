@@ -28,7 +28,7 @@ jobs:
         # GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)
         # token: # optional, default is ${{ github.token }}
         # GitHub repo where binary is located
-        repo: https://github.com/bufbuild/buf.git
+        repo: bufbuild/buf
         # tag containing binary to install
         # tag: # default is latest
         # OS Platform to match in release package. Specify this parameter if the repository releases do not follow a normal convention otherwise it will be auto-detected.
