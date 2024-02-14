@@ -27,8 +27,8 @@ jobs:
         -o "/usr/local/bin/buf" && chmod +x "/usr/local/bin/buf"
     - name: buf.build login
       env: # Or as an environment variable
-        BUF_TOKEN: ${{ secrets.BufToken }}
-        BUF_USER: ${{ secrets.BufUser }}
+        BUF_TOKEN: ${{ vars.BUF.BUFTOKEN }}
+        BUF_USER: ${{ vars.BUF.BUFUSER }}
       run: |
         buf registry login $BUF_USER
     - name: Build the Docker image
