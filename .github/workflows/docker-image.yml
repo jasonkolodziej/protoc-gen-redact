@@ -64,7 +64,7 @@ jobs:
         # Ensure that `buf` is installed
     - run: buf --version
     - run: | 
-        buf beta registry plugin push --visibility private --image docker.io/library/redact:v0.1.1
+        buf beta registry plugin push --visibility private --image redact:v0.1.1
     - name: buf.build logout
       run: buf registry logout
     
