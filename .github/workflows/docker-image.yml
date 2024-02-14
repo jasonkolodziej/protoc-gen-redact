@@ -52,7 +52,7 @@ jobs:
     #     # binaries-location: "/usr/local/bin" # optional
     - name: buf.build login
       run: |
-        /usr/local/buf
+        buf
     - name: Build the Docker image
     # - uses: actions/checkout@v3
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
