@@ -43,15 +43,21 @@ jobs:
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-    - name: Read buf.plugin data action
-      id: yaml-data
+    - name: Read buf.plugin version attribute
+      id: yaml-data-version
       uses: jbutcher5/read-yaml@1.6      # You may wish to replace main with a version tag such as '1.6' etc.
       with:
         file: './buf.plugin.yaml'          # File to read from
-        key-path: '["plugin_version", "name"]' # Access the runs key then the using key and retuns the value.
+        key-path: '["plugin_version"]' # Access the runs key then the using key and retuns the value.
+    - name: Read buf.plugin name attribute
+      id: yaml-data-name
+      uses: jbutcher5/read-yaml@1.6      # You may wish to replace main with a version tag such as '1.6' etc.
+      with:
+        file: './buf.plugin.yaml'          # File to read from
+        key-path: '["name"]' # Access the runs key then the using key and retuns the value.
 
     - name: Display read-yaml output
-      run: echo "${{ steps.yaml-data.outputs.data }}"
+      run: echo "${{ steps.yaml-data-name.outputs.data }}"
     #? This step uses the `docker/build-push-action` action to build the image, based on your repository's `Dockerfile`. 
     #? If the build succeeds, it pushes the image to GitHub Packages.
     #? It uses the `context` parameter to define the build's context as the set of files located in the specified path. 
