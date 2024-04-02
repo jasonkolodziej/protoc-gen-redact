@@ -6,6 +6,12 @@ CURRENT_REPO_PATH=$(shell go mod why | tail -n1)
 
 BUF_REPO=$(shell cd ./redact && buf mod open)
 
+BUF_VERSION:=$(shell curl -sSL https://api.github.com/repos/bufbuild/buf/releases/latest \
+                   | grep '"name":' \
+                   | head -1 \
+                   | cut -d : -f 2,3 \
+                   | tr -d '[:space:]\",')
+
 buf_repos:
 	@echo ${BUF_REPO}
 
