@@ -80,6 +80,7 @@ jobs:
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       run: | # buf.build/jasonkolodziej/redact:v0.1.1
         docker image ls
+        docker save -o image.tar ${{ steps.yaml-data-name.outputs.data }}:${{ steps.yaml-data-version.outputs.data }}
     #* Push module to the BSR
     # - uses: bufbuild/buf-push-action@v1
     #   with:
