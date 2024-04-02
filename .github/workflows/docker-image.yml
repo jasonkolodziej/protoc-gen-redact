@@ -102,7 +102,7 @@ jobs:
     - name: Push buf.build image
       run: | 
         ls -al
-        buf beta registry plugin push --visibility public --image ${{ steps.yaml-data-name.outputs.data }}-${{ steps.yaml-data-version.outputs.data }}.tar
+        buf beta registry plugin push --visibility public --image redact-${{ steps.yaml-data-version.outputs.data }}.tar
         
     - name: buf.build logout
       run: buf registry logout
