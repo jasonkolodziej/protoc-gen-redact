@@ -64,44 +64,45 @@ jobs:
     #? For more information, see "[Usage](https://github.com/docker/build-push-action#usage)" in the README of 
     #? the `docker/build-push-action` repository.
     #? It uses the `tags` and `labels` parameters to tag and label the image with the output from the "meta" step.
-    # - name: Build docker image
-    #   uses: docker/build-push-action@v5
+    - name: Build docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: false
+      #? Refer to: https://buf.build/docs/bsr/remote-plugins/custom-plugins#build-a-docker-image
+        platforms:
+          linux/amd64
+        ##* ${{ steps.meta.outputs.tags }}
+        tags: "${{ steps.yaml-data-name.outputs.data }}:${{ steps.yaml-data-version.outputs.data }}"
+        labels: ${{ steps.meta.outputs.labels }}
+    - name: Docker image list check
+    # - uses: actions/checkout@v3
+      #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: | # buf.build/jasonkolodziej/redact:v0.1.1
+        docker image ls
+    #* Push module to the BSR
+    # - uses: bufbuild/buf-push-action@v1
     #   with:
-    #     context: .
-    #     push: false
-    #   #? Refer to: https://buf.build/docs/bsr/remote-plugins/custom-plugins#build-a-docker-image
-    #     platforms:
-    #       linux/amd64
-    #     tags: ${{ steps.meta.outputs.tags }}
-    #     labels: ${{ steps.meta.outputs.labels }}
-    # - name: Docker image list check
-    # # - uses: actions/checkout@v3
-    #   #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-    #   run: | # buf.build/jasonkolodziej/redact:v0.1.1
-    #     docker image ls
-    # #* Push module to the BSR
-    # # - uses: bufbuild/buf-push-action@v1
-    # #   with:
-    # #     buf_token: ${{ secrets.BUFTOKEN }}
-    # #     # https://buf.build/docs/ci-cd/github-actions#buf-push
-    # #     input: --image buf.build/jasonkolodziej/redact:v0.1.1
-    # #     create_visibility: private
-    # #     draft: ${{ github.ref_name != 'main'}}
-    # - name: Setup buf.build action for publishing protoc-plugin image
-    #   uses: bufbuild/buf-setup-action@v1
-    #   with:
-    #     buf_user: ${{ secrets.BUFUSER }}
-    #     buf_api_token: ${{ secrets.BUFTOKEN }}
-    #     # Ensure that `buf` is installed
-    # - name: Validate buf is working
-    #   run: buf --version
+    #     buf_token: ${{ secrets.BUFTOKEN }}
+    #     # https://buf.build/docs/ci-cd/github-actions#buf-push
+    #     input: --image buf.build/jasonkolodziej/redact:v0.1.1
+    #     create_visibility: private
+    #     draft: ${{ github.ref_name != 'main'}}
+    - name: Setup buf.build action for publishing protoc-plugin image
+      uses: bufbuild/buf-setup-action@v1
+      with:
+        buf_user: ${{ secrets.BUFUSER }}
+        buf_api_token: ${{ secrets.BUFTOKEN }}
+        # Ensure that `buf` is installed
+    - name: Validate buf is working
+      run: buf --version
       
-    # - name: Push buf.build image
-    #   run: | 
-    #     buf beta registry plugin push --visibility private --image redact:v0.1.1
+    - name: Push buf.build image
+      run: | 
+        buf beta registry plugin push --visibility private --image redact:v0.1.1
         
-    # - name: buf.build logout
-    #   run: buf registry logout
+    - name: buf.build logout
+      run: buf registry logout
     
 
           
