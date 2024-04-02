@@ -89,8 +89,9 @@ jobs:
     #     create_visibility: private
     #     draft: ${{ github.ref_name != 'main'}}
     - name: Setup buf.build action for publishing protoc-plugin image
-      uses: bufbuild/buf-setup-action@v1
+      uses: bufbuild/buf-setup-action@v1.30.0
       with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         buf_user: ${{ secrets.BUFUSER }}
         buf_api_token: ${{ secrets.BUFTOKEN }}
         # Ensure that `buf` is installed
