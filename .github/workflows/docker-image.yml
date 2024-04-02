@@ -21,37 +21,10 @@ jobs:
     permissions:
       contents: read
       packages: write
-    # 
+    #* Checkout
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    #* Install buf
-    # - name: Install Buf.build
-    #   uses: bufbuild/buf-setup-action@v1
-    #   with:
-    #     buf_user: ${{ secrets.BUFUSER }}
-    #     buf_api_token: ${{ secrets.BUFTOKEN }}
-      
-    # - name: List
-    #   run: |
-    #     ls -al
-    #     echo $PATH
-    #     BUF_VERSION=$(curl -sSL https://api.github.com/repos/bufbuild/buf/releases/latest \
-    #                | grep '"name":' \
-    #                | head -1 \
-    #                | cut -d : -f 2,3 \
-    #                | tr -d '[:space:]\",')
-    #     curl -sSL "https://github.com/bufbuild/buf/releases/download/${BUF_VERSION}/buf-$(uname -s)-$(uname -m)" \
-    #     -o "/usr/local/bin/buf" && chmod +x "/usr/local/bin/buf"
-    # - name: buf.build login
-    #   shell: bash
-    #   env: # Or as an environment variable
-    #     BUF_TOKEN: ${{ secrets.BUFTOKEN }}
-    #     BUF_USER: ${{ secrets.BUFUSER }}
-    #   run: |
-    #     echo $BUF_USER
-    #     echo "$BUF_USER"
-    #     buf registry login --verbose --username "$BUF_USER" --token-stdin "$BUF_TOKEN"
     #? Uses the `docker/login-action` action to log in to the Container registry registry 
     #? using the account and password that will publish the packages. 
     #? Once published, the packages are scoped to the account defined here.
@@ -69,49 +42,59 @@ jobs:
       uses: docker/metadata-action@v5.5.1
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+    - name: Read buf.plugin data action
+      id: yaml-data
+      uses: jbutcher5/read-yaml@main      # You may wish to replace main with a version tag such as '1.6' etc.
+      with:
+        file: './buf.plugin.yaml'          # File to read from
+        key-path: '["plugin_version", "name"]' # Access the runs key then the using key and retuns the value.
+
+    - name: Display read-yaml output
+      run: echo "${{ steps.yaml-data.outputs.data }}"
     #? This step uses the `docker/build-push-action` action to build the image, based on your repository's `Dockerfile`. 
     #? If the build succeeds, it pushes the image to GitHub Packages.
     #? It uses the `context` parameter to define the build's context as the set of files located in the specified path. 
     #? For more information, see "[Usage](https://github.com/docker/build-push-action#usage)" in the README of 
     #? the `docker/build-push-action` repository.
     #? It uses the `tags` and `labels` parameters to tag and label the image with the output from the "meta" step.
-    - name: Build docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        push: false
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
-    - name: DEPRECATED Build Docker image
-    # - uses: actions/checkout@v3
-      #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-      run: | # buf.build/jasonkolodziej/redact:v0.1.1
-        docker build --platform linux/amd64 -t redact:v0.1.1 .
-        docker image ls
-        docker pull redact:v0.1.1
-    #* Push module to the BSR
-    # - uses: bufbuild/buf-push-action@v1
+    # - name: Build docker image
+    #   uses: docker/build-push-action@v5
     #   with:
-    #     buf_token: ${{ secrets.BUFTOKEN }}
-    #     # https://buf.build/docs/ci-cd/github-actions#buf-push
-    #     input: --image buf.build/jasonkolodziej/redact:v0.1.1
-    #     create_visibility: private
-    #     draft: ${{ github.ref_name != 'main'}}
-    - name: Setup buf.build action for publishing protoc-plugin image
-      uses: bufbuild/buf-setup-action@v1
-      with:
-        buf_user: ${{ secrets.BUFUSER }}
-        buf_api_token: ${{ secrets.BUFTOKEN }}
-        # Ensure that `buf` is installed
-    - name: Validate buf is working
-      run: buf --version
+    #     context: .
+    #     push: false
+    #   #? Refer to: https://buf.build/docs/bsr/remote-plugins/custom-plugins#build-a-docker-image
+    #     platforms:
+    #       linux/amd64
+    #     tags: ${{ steps.meta.outputs.tags }}
+    #     labels: ${{ steps.meta.outputs.labels }}
+    # - name: Docker image list check
+    # # - uses: actions/checkout@v3
+    #   #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    #   run: | # buf.build/jasonkolodziej/redact:v0.1.1
+    #     docker image ls
+    # #* Push module to the BSR
+    # # - uses: bufbuild/buf-push-action@v1
+    # #   with:
+    # #     buf_token: ${{ secrets.BUFTOKEN }}
+    # #     # https://buf.build/docs/ci-cd/github-actions#buf-push
+    # #     input: --image buf.build/jasonkolodziej/redact:v0.1.1
+    # #     create_visibility: private
+    # #     draft: ${{ github.ref_name != 'main'}}
+    # - name: Setup buf.build action for publishing protoc-plugin image
+    #   uses: bufbuild/buf-setup-action@v1
+    #   with:
+    #     buf_user: ${{ secrets.BUFUSER }}
+    #     buf_api_token: ${{ secrets.BUFTOKEN }}
+    #     # Ensure that `buf` is installed
+    # - name: Validate buf is working
+    #   run: buf --version
       
-    - name: Push buf.build image
-      run: | 
-        buf beta registry plugin push --visibility private --image redact:v0.1.1
+    # - name: Push buf.build image
+    #   run: | 
+    #     buf beta registry plugin push --visibility private --image redact:v0.1.1
         
-    - name: buf.build logout
-      run: buf registry logout
+    # - name: buf.build logout
+    #   run: buf registry logout
     
 
           
