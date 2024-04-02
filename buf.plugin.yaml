@@ -1,5 +1,5 @@
 # https://github.com/bufbuild/plugins/blob/main/CONTRIBUTING.md#bufpluginyaml-file
 version: v1
-name: buf.build/jasonkolodziej/redact
+name: buf.build/jasonkolodziej/protoc-gen-redact
 source_url: https://github.com/jasonkolodziej/protoc-gen-redact@bufbuild
 plugin_version: v0.1.1
