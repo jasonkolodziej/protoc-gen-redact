@@ -6,10 +6,11 @@ plugins:
     out: ./redact #redact || proto_generated
     opt: 
       - paths=source_relative
+      # - require_unimplemented_servers=false
   # - remote: buf.build/grpc/plugins/go:v1.2.0-1
-  - plugin: buf.build/protocolbuffers/go
-    out: ./redact
-    opt: paths=source_relative,require_unimplemented_servers=false
+  # - plugin: buf.build/protocolbuffers/go
+  #   out: ./redact
+  #   opt: paths=source_relative,
 #  - name: go
 #    out: .
 #    opt:
