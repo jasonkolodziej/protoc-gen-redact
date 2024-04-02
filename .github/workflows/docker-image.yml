@@ -100,7 +100,7 @@ jobs:
       
     - name: Push buf.build image
       run: | 
-        buf beta registry plugin push --visibility private --image "${{ steps.yaml-data-name.outputs.data }}:${{ steps.yaml-data-version.outputs.data }}"
+        buf beta registry plugin push --visibility private --image ${{ steps.yaml-data-name.outputs.data }}:${{ steps.yaml-data-version.outputs.data }}
         
     - name: buf.build logout
       run: buf registry logout
